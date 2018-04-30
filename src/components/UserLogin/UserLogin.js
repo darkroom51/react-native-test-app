@@ -3,12 +3,20 @@ import {Button, TextInput, View} from 'react-native';
 
 import {styles} from './style';
 import {ROUTE_DETAILS} from "../../consts/router";
+import {api} from '../../../App'
 
 
 export default class UserLogin extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+
+    data: null
+  }
+
+  componentDidMount() {
+    api.getOneUser()
+      .then(response => console.log(response))
   }
 
   submitForm = () => {
