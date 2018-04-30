@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, TextInput, View} from 'react-native';
 
-import {styles} from './style'
+import {styles} from './style';
+import {ROUTE_DETAILS} from "../../consts/router";
 
 
 export default class UserLogin extends React.Component {
@@ -12,7 +13,7 @@ export default class UserLogin extends React.Component {
 
   submitForm = () => {
     if (this.state.username && this.state.password) {
-      this.props.navigation.navigate('Details');
+      this.props.navigation.navigate(ROUTE_DETAILS);
     }
   }
 

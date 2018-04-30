@@ -1,8 +1,5 @@
 import React from 'react';
-import {StackNavigator} from 'react-navigation';
-
-import UserLogin from './components/UserLogin/UserLogin';
-import UserDetails from './components/UserDetails/UserDetails';
+import {RootStack} from "./src/routes/router";
 
 
 export default class App extends React.Component {
@@ -13,17 +10,3 @@ export default class App extends React.Component {
   }
 }
 
-
-const RootStack = StackNavigator(
-  {
-    Home: {
-      screen: UserLogin,
-    },
-    Details: {
-      screen: UserDetails,
-    },
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);
