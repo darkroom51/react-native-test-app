@@ -6,27 +6,24 @@ import UserDetails from './components/UserDetails/UserDetails';
 
 
 export default class App extends React.Component {
-
-
-    render() {
-        return (
-            <RootStack/>
-        );
-    }
+  render() {
+    return (
+      <RootStack/>
+    );
+  }
 }
 
+
 const RootStack = StackNavigator(
-    {
-        Home: {
-            screen: UserLogin,
-        },
-        Details: {
-            screen: UserDetails,
-        },
+  {
+    Home: {
+      screen: UserLogin,
     },
-    {
-        initialRouteName: 'Home',
-    }
+    Details: {
+      screen: UserDetails,
+    },
+  },
+  {
+    initialRouteName: 'Home',
+  }
 );
-
-
