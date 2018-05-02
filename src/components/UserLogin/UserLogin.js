@@ -9,7 +9,8 @@ import {api} from '../../../App';
 export default class UserLogin extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    signInDisabled: false
   }
 
   signIn = () => {
@@ -17,8 +18,8 @@ export default class UserLogin extends React.Component {
       api.userLogin()
         .then(response => {
           if(response.status === 200) {
+            this.setState({signInDisabled: true});
             api.setUser(response.data);
-            console.log(api.user)
             this.props.navigation.navigate(ROUTE_DETAILS)
           }
         })
@@ -47,6 +48,7 @@ export default class UserLogin extends React.Component {
             onPress={this.signIn}
             title="Sign In"
             accessibilityLabel="Learn more about this sign in"
+            disabled={this.state.signInDisabled}
           />
         </View>
       </View>

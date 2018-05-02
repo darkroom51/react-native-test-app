@@ -20,12 +20,12 @@ export default class ApiService {
     return this.request.get(API_ENDPOINT_USER)
   }
 
-  setUser = (loggedUser) => {
+  setUser = (user) => {
     this.user = {
-      id: loggedUser.id,
-      name: loggedUser.name,
-      username: loggedUser.username,
-      email: loggedUser.email
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      email: user.email
     };
     this.isLogged = true;
   }

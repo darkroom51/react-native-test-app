@@ -9,21 +9,22 @@ import {api} from '../../../App';
 export default class UserDetails extends React.Component {
   state = {
     userData: null,
-    isLogged: false
+    signOutDisabled: false
   }
 
   componentDidMount() {
     if (api.isLogged) {
-      this.setState({isLogged: true});
       api.getProfile()
         .then(response => this.setState({userData: response.data}))
         .catch(e => console.log(e))
+    } else {
+      this.props.navigation.navigate(ROUTE_HOME);
     }
   }
 
   signOut = () => {
+    this.setState({signOutDisable: true});
     api.unSetUser();
-    console.log(api.user)
     this.props.navigation.navigate(ROUTE_HOME);
   }
 
@@ -47,13 +48,9 @@ export default class UserDetails extends React.Component {
           }
         </View>
         <Button
-          onPress={() => this.props.navigation.navigate(ROUTE_HOME)}
-          title="back"
-          accessibilityLabel="Learn more about this back"
-        />
-        <Button
           onPress={this.signOut}
           title="logout"
+          disabled={this.state.signOutDisabled}
         />
       </View>
     );
