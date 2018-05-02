@@ -1,18 +1,23 @@
 import axios from 'axios';
+import {JSON_PLACE_URL} from '../consts/api';
 
-export default class ApiService {
+
+class ApiService {
   constructor(baseUrl){
-    this.baseUrl = baseUrl;
     this.request = axios.create({
-      baseURL: this.baseUrl,
+      baseURL: baseUrl,
       timeout: 1000
     });
   }
 
-  getOneUser = () => {
-    return this.request.get(this.baseUrl+'/users/1')
+  userLogin = () => {
+    return this.request.get('/users/1')
   }
-  getAllUsers = () => {
-    this.request.get(this.baseUrl)
+
+  getProfile = () => {
+    return this.request.get('/users/1')
   }
 }
+
+
+export const api = new ApiService(JSON_PLACE_URL);
