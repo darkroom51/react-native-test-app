@@ -3,21 +3,22 @@ import {Button, TextInput, View} from 'react-native';
 
 import {styles} from './style';
 import {ROUTE_DETAILS} from "../../consts/router";
-import {api} from '../../api/api-service';
+import {api} from '../../../App';
 
 
 export default class UserLogin extends React.Component {
   state = {
-    username: 'user',
-    password: 'hardcoded',
+    username: '',
+    password: ''
   }
 
-
-  submitForm = () => {
+  signIn = () => {
     if (this.state.username && this.state.password) {
       api.userLogin()
         .then(response => {
           if(response.status === 200) {
+            api.setUser(response.data);
+            console.log(api.user)
             this.props.navigation.navigate(ROUTE_DETAILS)
           }
         })
@@ -43,7 +44,7 @@ export default class UserLogin extends React.Component {
             placeholder="password"
           />
           <Button
-            onPress={this.submitForm}
+            onPress={this.signIn}
             title="Sign In"
             accessibilityLabel="Learn more about this sign in"
           />

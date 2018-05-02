@@ -3,18 +3,28 @@ import {Button, Text, View} from "react-native";
 
 import {styles} from './style';
 import {ROUTE_HOME} from "../../consts/router";
-import {api} from '../../api/api-service';
+import {api} from '../../../App';
 
 
 export default class UserDetails extends React.Component {
   state = {
-    userData: null
+    userData: null,
+    isLogged: false
   }
 
   componentDidMount() {
-    api.getProfile()
-      .then(response => this.setState({userData: response.data}))
-      .catch(e => console.log(e))
+    if (api.isLogged) {
+      this.setState({isLogged: true});
+      api.getProfile()
+        .then(response => this.setState({userData: response.data}))
+        .catch(e => console.log(e))
+    }
+  }
+
+  signOut = () => {
+    api.unSetUser();
+    console.log(api.user)
+    this.props.navigation.navigate(ROUTE_HOME);
   }
 
 
@@ -27,6 +37,7 @@ export default class UserDetails extends React.Component {
             this.state.userData
               ?
               <View>
+                <Text>{this.state.userData.id}</Text>
                 <Text>{this.state.userData.name}</Text>
                 <Text>{this.state.userData.username}</Text>
                 <Text>{this.state.userData.email}</Text>
@@ -39,6 +50,10 @@ export default class UserDetails extends React.Component {
           onPress={() => this.props.navigation.navigate(ROUTE_HOME)}
           title="back"
           accessibilityLabel="Learn more about this back"
+        />
+        <Button
+          onPress={this.signOut}
+          title="logout"
         />
       </View>
     );
