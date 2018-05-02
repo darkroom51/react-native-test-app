@@ -3,7 +3,7 @@ import {Button, Text, View} from "react-native";
 
 import {styles} from './style';
 import {ROUTE_HOME} from "../../consts/router";
-import {api} from '../../../App';
+import {api} from '../../api/api-service';
 
 
 export default class UserDetails extends React.Component {
@@ -14,7 +14,7 @@ export default class UserDetails extends React.Component {
   componentDidMount() {
     api.getProfile()
       .then(response => this.setState({userData: response.data}))
-      .catch(e => console.log(es))
+      .catch(e => console.log(e))
   }
 
 

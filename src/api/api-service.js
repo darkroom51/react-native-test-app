@@ -1,6 +1,8 @@
 import axios from 'axios';
+import {JSON_PLACE_URL} from '../consts/api';
 
-export default class ApiService {
+
+class ApiService {
   constructor(baseUrl){
     this.request = axios.create({
       baseURL: baseUrl,
@@ -16,3 +18,6 @@ export default class ApiService {
     return this.request.get('/users/1')
   }
 }
+
+
+export const api = new ApiService(JSON_PLACE_URL);
