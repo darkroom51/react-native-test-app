@@ -19,5 +19,13 @@ export const styles = StyleSheet.create({
   loginInput: {
     height: 40,
     margin: 10
+  },
+  listItem:{
+    padding:20,
+    margin: 5,
+    backgroundColor: '#fff'
+  },
+  listItemText: {
+    color: '#666'
   }
 });

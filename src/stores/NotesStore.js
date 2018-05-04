@@ -5,7 +5,16 @@ class NotesStore {
 
   @action
   addNote = note => {
-    this.notes.push(note);
+    this.notes.push({
+      id: Date.now(),
+      text: note
+    });
+  }
+
+  @action
+  deleteNote = id => {
+    const tmp = this.notes.filter(el => el.id !== id);
+    this.notes = [...tmp];  
   }
 
 }

@@ -1,47 +1,50 @@
 import React from 'react';
-import {Button, TextInput, Text, View} from 'react-native';
+import { Button, TextInput, Text, View, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 
-import {styles} from './style';
+import { styles } from './style';
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
 
 import { inject, observer } from 'mobx-react';
-import {ROUTE_HOME} from "../../consts/router";
-import {api} from "../../../App";
+import { ROUTE_HOME } from "../../consts/router";
+import { api } from "../../../App";
 
 
 @inject('NotesStore')
 @observer
 export default class Notes extends React.Component {
   state = {
-    notes: [],
-    note:'',
+    note: '',
     addNoteBtnDisabled: false,
     errorMsgOpened: false,
     errorMsgText: ''
   }
 
-  // componentDidMount() {
-  //   if (api.isLogged) {
-  //     api.getProfile()
-  //       .then(response => this.setState({userData: response.data}))
-  //       .catch(e => console.log(e))
-  //   } else {
-  //     this.props.navigation.navigate(ROUTE_HOME);
-  //   }
-  // }
+  componentDidMount() {
+    if (api.isLogged) {
+      api.getProfile()
+        .then(response => this.setState({userData: response.data}))
+        .catch(e => console.log(e))
+    } else {
+      this.props.navigation.navigate(ROUTE_HOME);
+    }
+  }
 
   addNote = () => {
-      //this.setState({addNoteBtnDisabled: true});
+    if (this.state.note) {
       this.props.NotesStore.addNote(this.state.note);
+      this.setState({ note: '' });
+    }
+  }
+
+  deleteNote = (id) => {
+    this.props.NotesStore.deleteNote(id)
   }
 
   closeErrorMsg = () => {
-    this.setState({errorMsgOpened: false});
+    this.setState({ errorMsgOpened: false });
   }
 
   render() {
-    console.log(this.props.NotesStore.notes);
-
     return (
       <View style={styles.container}>
         <ErrorMsg
@@ -52,7 +55,7 @@ export default class Notes extends React.Component {
         <View style={styles.loginForm}>
           <TextInput
             style={styles.loginInput}
-            onChangeText={(note) => this.setState({note})}
+            onChangeText={(note) => this.setState({ note })}
             value={this.state.note}
             placeholder="enter note"
             autoFocus={true}
@@ -63,13 +66,23 @@ export default class Notes extends React.Component {
             accessibilityLabel="Learn more about this sign in"
             disabled={this.state.addNoteBtnDisabled}
           />
-          <View>
+          <ScrollView>
             {
               this.props.NotesStore.notes.map(el => (
-                <Text>{el}</Text>
+                <TouchableOpacity
+                  key={el.id}
+                  onPress={() => this.deleteNote(el.id)}
+                  style={styles.listItem}
+                >
+                  <View>
+                    <Text style={styles.listItemText}>
+                      {el.text}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               ))
             }
-          </View>
+          </ScrollView>
         </View>
       </View>
     );

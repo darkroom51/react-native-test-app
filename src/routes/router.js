@@ -18,6 +18,6 @@ export const RootStack = StackNavigator(
     }
   },
   {
-    initialRouteName: ROUTE_NOTES,
+    initialRouteName: ROUTE_HOME,
   }
 );
