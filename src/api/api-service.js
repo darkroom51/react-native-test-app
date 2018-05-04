@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {API_ENDPOINT_USER} from '../consts/api';
+import {api} from "../../App";
 
 
 export default class ApiService {
@@ -12,8 +13,18 @@ export default class ApiService {
     });
   }
 
-  userLogin = () => {
+
+  userLogin = (email, password) => {
     return this.request.get(API_ENDPOINT_USER)
+      .then(response => {
+        if(response.status === 200) {
+          if(response.data && response.data.id && response.data.name && response.data.email && response.data.username) {
+            api.setUser(response.data);
+          } else {
+            throw new Error('Invalid user data in server response');
+          }
+        }
+      })
   }
 
   getProfile = () => {

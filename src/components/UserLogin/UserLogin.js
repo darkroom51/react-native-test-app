@@ -16,22 +16,16 @@ export default class UserLogin extends React.Component {
     errorMsgText: ''
   }
 
+
   signIn = () => {
     if (this.state.username && this.state.password) {
-      api.userLogin()
-        .then(response => {
-          if(response.status === 200) {
-            if (response.data.id && response.data.name && response.data.email && response.data.username) {
-              this.setState({signInDisabled: true});
-              api.setUser(response.data);
-              this.props.navigation.navigate(ROUTE_DETAILS)
-            } else {
-              throw new Error('Invalid user data in server response');
-            }
-          }
+      api.userLogin(this.state.username, this.state.password)
+        .then(data => {
+          this.setState({signInDisabled: true});
+          this.props.navigation.navigate(ROUTE_DETAILS)
         })
         .catch(e => {
-          this.setState({ errorMsgOpened: true, errorMsgText: e.message });
+          this.setState({errorMsgOpened: true, errorMsgText: e.message});
         })
     }
   }
@@ -46,7 +40,7 @@ export default class UserLogin extends React.Component {
         <ErrorMsg
           opened={this.state.errorMsgOpened}
           text={this.state.errorMsgText}
-          closeErrorMsg = {this.closeErrorMsg}
+          closeErrorMsg={this.closeErrorMsg}
         />
         <View style={styles.loginForm}>
           <TextInput
