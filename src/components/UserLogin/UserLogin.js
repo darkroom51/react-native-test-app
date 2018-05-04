@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, TextInput, View} from 'react-native';
+import {Button, TextInput, Text, View} from 'react-native';
 
 import {styles} from './style';
 import {ROUTE_DETAILS} from "../../consts/router";
