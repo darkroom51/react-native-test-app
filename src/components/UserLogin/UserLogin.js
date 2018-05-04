@@ -11,7 +11,7 @@ export default class UserLogin extends React.Component {
   state = {
     username: '',
     password: '',
-    signInDisabled: false,
+    signInBtnDisabled: false,
     errorMsgOpened: false,
     errorMsgText: ''
   }
@@ -19,13 +19,14 @@ export default class UserLogin extends React.Component {
 
   signIn = () => {
     if (this.state.username && this.state.password) {
+      this.setState({signInBtnDisabled: false});
       api.userLogin(this.state.username, this.state.password)
         .then(data => {
-          this.setState({signInDisabled: true});
+          this.setState({signInBtnDisabled: false});
           this.props.navigation.navigate(ROUTE_DETAILS)
         })
         .catch(e => {
-          this.setState({errorMsgOpened: true, errorMsgText: e.message});
+          this.setState({errorMsgOpened: true, errorMsgText: e.message, signInBtnDisabled: false});
         })
     }
   }
