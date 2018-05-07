@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Text, View} from "react-native";
 
 import {styles} from './style';
-import {ROUTE_HOME} from "../../consts/router";
+import {ROUTE_HOME, ROUTE_NOTES} from "../../consts/router";
 import {api} from '../../../App';
 
 
@@ -50,6 +50,11 @@ export default class UserDetails extends React.Component {
         <Button
           onPress={this.signOut}
           title="logout"
+          disabled={this.state.signOutDisabled}
+        />
+        <Button
+          onPress={() => this.props.navigation.navigate(ROUTE_NOTES)}
+          title="Notes"
           disabled={this.state.signOutDisabled}
         />
       </View>

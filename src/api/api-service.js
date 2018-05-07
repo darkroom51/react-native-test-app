@@ -13,7 +13,6 @@ export default class ApiService {
     });
   }
 
-
   userLogin = (email, password) => {
     return this.request.get(API_ENDPOINT_USER)
       .then(response => {
