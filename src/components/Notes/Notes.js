@@ -20,11 +20,7 @@ export default class Notes extends React.Component {
   }
 
   componentDidMount() {
-    if (api.isLogged) {
-      api.getProfile()
-        .then(response => this.setState({userData: response.data}))
-        .catch(e => console.log(e))
-    } else {
+    if (!api.isLogged) {
       this.props.navigation.navigate(ROUTE_HOME);
     }
   }
@@ -63,20 +59,19 @@ export default class Notes extends React.Component {
           <Button
             onPress={this.addNote}
             title="Add new"
-            accessibilityLabel="Learn more about this sign in"
             disabled={this.state.addNoteBtnDisabled}
           />
           <ScrollView>
             {
-              this.props.NotesStore.notes.map(el => (
+              this.props.NotesStore.notes.map(note => (
                 <TouchableOpacity
-                  key={el.id}
-                  onPress={() => this.deleteNote(el.id)}
+                  key={note.id}
+                  onPress={() => this.deleteNote(note.id)}
                   style={styles.listItem}
                 >
                   <View>
                     <Text style={styles.listItemText}>
-                      {el.text}
+                      {note.text}
                     </Text>
                   </View>
                 </TouchableOpacity>

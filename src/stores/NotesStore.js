@@ -13,8 +13,8 @@ class NotesStore {
 
   @action
   deleteNote = id => {
-    const tmp = this.notes.filter(el => el.id !== id);
-    this.notes = [...tmp];  
+    const notes = this.notes.slice();
+    this.notes = notes.filter(note => note.id !== id);
   }
 
 }
